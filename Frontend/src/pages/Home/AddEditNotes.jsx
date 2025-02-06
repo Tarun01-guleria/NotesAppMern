@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import TagInput from "../../components/Input/TagInput";
 import axios from "axios";
@@ -7,7 +7,21 @@ import { toast } from "react-toastify";
 const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
   const [title, setTitle] = useState(noteData?.title || "");
   const [content, setContent] = useState(noteData?.content || "");
-  const [tags, setTags] = useState(noteData?.tags || []);
+
+  const [tags, setTags] = useState(() => {
+    if (!noteData?.tags) return [];
+    // Check if the tags are already an array
+    if (Array.isArray(noteData.tags)) {
+      return noteData.tags;
+    }
+    // If it's a stringified array, parse it
+    try {
+      return JSON.parse(noteData.tags);
+    } catch (e) {
+      return []; // If parsing fails, return an empty array
+    }
+  });
+
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(noteData?.image || ""); // Show existing image if editing
   const [error, setError] = useState(null);
@@ -68,13 +82,13 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
   };
 
   // API Calls
-  const editNote = async () => {
+  const editNote = async (stringifiedTags) => {
     const noteId = noteData._id;
     try {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", content);
-      formData.append("tags", tags.length > 0 ? JSON.stringify(tags) : "");
+      formData.append("tags", stringifiedTags);
       if (image) {
         formData.append("image", image);
       }

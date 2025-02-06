@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.route.js"; // Import your auth routes
 import noteRouter from "./routes/note.route.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import appRootPath from "app-root-path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,6 +29,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(express.static(path.join(appRootPath.path, "Frontend/dist")));
 
 // Serve static files (uploaded images)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

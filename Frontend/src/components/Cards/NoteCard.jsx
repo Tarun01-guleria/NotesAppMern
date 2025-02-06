@@ -6,6 +6,7 @@ import {
 } from "react-icons/md";
 import moment from "moment";
 import { toast } from "react-toastify";
+
 const NoteCard = ({
   title,
   date,
@@ -24,13 +25,26 @@ const NoteCard = ({
     navigator.clipboard.writeText(content);
     toast.success("Note copied to clipboard!");
   };
+
+  // Process tags to display them correctly
+  const formattedTags = tags.flatMap((tag) => {
+    // If the tag is a stringified array, parse it properly
+    try {
+      const parsedTag = JSON.parse(tag);
+      return Array.isArray(parsedTag) ? parsedTag : [tag];
+    } catch (error) {
+      return [tag]; // If parsing fails, keep the tag as is
+    }
+  });
+
+  // Now, display tags without any extra quotes or arrays
   return (
     <div className="border rounded p-4 bg-white hover:shadow-xl transition-all ease-in-out mx-2">
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
           <h6 className="text-sm font-medium">{title}</h6>
           <span className="text-sm text-green-700">
-            {moment(date).format("Do MMM YYYY ")}
+            {moment(date).format("Do MMM YYYY")}
           </span>
         </div>
         <MdOutlinePushPin
@@ -43,9 +57,11 @@ const NoteCard = ({
       <p className="text-xs text-slate-600 mt-2">{content?.slice(0, 60)}</p>
       <div className="flex items-center justify-between mt-2">
         <div className="text-xs text-slate-500">
-          {tags.map((item) => `#${item} `)}
+          {formattedTags.map((item, index) => (
+            <span key={index}>#{item} </span>
+          ))}
         </div>
-        <div className="flex gap-2 ">
+        <div className="flex gap-2">
           <MdCreate
             className="icon-btn hover:text-green-600"
             onClick={onEdit}

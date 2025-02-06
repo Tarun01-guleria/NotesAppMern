@@ -29,7 +29,9 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
-app.use(express.static(path.join(appRootPath.path, "Frontend/dist")));
+const static_path = path.join(appRootPath.path, "../Frontend/dist");
+console.log(static_path);
+app.use(express.static(static_path));
 
 // Serve static files (uploaded images)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -45,7 +47,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ success: false, message });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 app.listen(PORT, () => {
   console.log(`Server is Running on port ${PORT}`);
 });

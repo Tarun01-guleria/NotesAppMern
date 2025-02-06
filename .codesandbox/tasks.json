@@ -3,5 +3,19 @@
   "setupTasks": [],
 
   // These tasks can be run from CodeSandbox. Running one will open a log in the app.
-  "tasks": {}
+  "tasks": {
+    "install-dependencies": {
+      "name": "Install Dependencies",
+      "command": "npm install"
+    },
+    "install-dependencies-backend": {
+      "name": "Install Dependencies",
+      "command": "cd Backend && npm install"
+    },
+    "start-app": {
+      "name": "Run Dev Server",
+      "command": "npm start",
+      "runAtStart": true
+    }
+  }
 }

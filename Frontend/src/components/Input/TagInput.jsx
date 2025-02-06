@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MdClose, MdAdd } from "react-icons/md";
 
 const TagInput = ({ tags, setTags }) => {
+  console.log("tags", tags);
   const [inputVal, setInputVal] = useState("");
 
   const handleRemoveTag = (tagToRemove) => {
@@ -11,7 +12,7 @@ const TagInput = ({ tags, setTags }) => {
   const addNewTag = () => {
     const trimmedTag = inputVal.trim();
     if (trimmedTag && !tags.includes(trimmedTag)) {
-      setTags((prevTags) => [...prevTags, trimmedTag]); // Add the trimmed tag
+      setTags((prevTags) => [...prevTags, [trimmedTag].toString()]); // Add the trimmed tag
     }
     setInputVal(""); // Clear input after adding
   };

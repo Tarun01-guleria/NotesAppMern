@@ -36,7 +36,7 @@ const SignUp = () => {
 
     try {
       const res = await axios.post(
-        window.location.origin + "/api/auth/signup",
+        Env.API_BASE_URL + "/api/auth/signup",
         {
           username: name,
           email,

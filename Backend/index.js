@@ -30,7 +30,12 @@ const app = express();
 // Middleware setup
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true,
+  })
+);
 const static_path = path.join(appRootPath.path, "../Frontend/dist");
 console.log(static_path);
 app.use(express.static(static_path));

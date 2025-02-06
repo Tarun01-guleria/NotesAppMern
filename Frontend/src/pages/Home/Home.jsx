@@ -39,7 +39,7 @@ const Home = () => {
 
   const getAllNotes = async () => {
     try {
-      const res = await axios.get(window.location.origin + "/api/note/all", {
+      const res = await axios.get(Env.API_BASE_URL + "/api/note/all", {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -50,7 +50,7 @@ const Home = () => {
         console.log(res.data);
         return;
       }
-      console.log(res.data);
+      console.log("getAllNotes", res.data);
 
       setAllNotes(res.data.notes);
     } catch (error) {
@@ -59,6 +59,7 @@ const Home = () => {
   };
 
   const handleEdit = (noteDetails) => {
+    console.log("noteDetails", noteDetails);
     setOpenAddEditModel({ isShown: true, data: noteDetails, type: "edit" });
   };
 
@@ -69,7 +70,7 @@ const Home = () => {
 
     try {
       const res = await axios.delete(
-        window.location.origin + "/api/note/delete/" + noteId,
+        Env.API_BASE_URL + "/api/note/delete/" + noteId,
         {
           withCredentials: true,
           headers: {
@@ -90,7 +91,7 @@ const Home = () => {
 
   const onSearchNote = async (query) => {
     try {
-      const res = await axios.get(window.location.origin + "/api/note/search", {
+      const res = await axios.get(Env.API_BASE_URL + "/api/note/search", {
         params: { query },
         withCredentials: true,
         headers: {

@@ -8,13 +8,9 @@ import { Env } from "../../env";
 const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
   const [title, setTitle] = useState(noteData?.title || "");
   const [content, setContent] = useState(noteData?.content || "");
-
+  console.log("noteData:", noteData);
   const [tags, setTags] = useState(() => {
     if (!noteData?.tags) return [];
-    // Check if the tags are already an array
-    if (Array.isArray(noteData.tags)) {
-      return noteData.tags;
-    }
     // If it's a stringified array, parse it
     try {
       return JSON.parse(noteData.tags);
@@ -89,7 +85,7 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", content);
-      formData.append("tags", stringifiedTags);
+      formData.append("tags", tags.length > 0 ? JSON.stringify(tags) : "");
       if (image) {
         formData.append("image", image);
       }
@@ -132,7 +128,7 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
       }
 
       const res = await axios.post(
-        window.location.origin + "/api/note/add",
+        Env.API_BASE_URL + "/api/note/add",
         formData,
         {
           withCredentials: true,

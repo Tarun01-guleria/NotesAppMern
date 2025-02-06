@@ -42,11 +42,18 @@ export const signin = async (req, res, next) => {
     }
     const token = jwt.sign({ id: validUser._id }, "cdcsldfj");
     const { password: pass, ...rest } = validUser._doc;
-    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-      success: true,
-      message: "Login Successful",
-      user: rest,
-    });
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+      })
+      .status(200)
+      .json({
+        success: true,
+        message: "Login Successful",
+        user: rest,
+      });
   } catch (error) {
     next(error);
   }

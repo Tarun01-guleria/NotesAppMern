@@ -15,7 +15,9 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(
+    "mongodb+srv://tarun001:Hello321@cluster0.palaq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })

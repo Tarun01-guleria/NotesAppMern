@@ -38,7 +38,7 @@ const Login = () => {
     try {
       dispatch(signInStart());
       const res = await axios.post(
-        "http://localhost:8000/api/auth/signin",
+        "http://localhost:8001/api/auth/signin",
         {
           email,
           password,

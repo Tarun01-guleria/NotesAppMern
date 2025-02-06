@@ -36,9 +36,10 @@ const Login = () => {
     //Login API
 
     try {
+      console.log(window.location.origin);
       dispatch(signInStart());
       const res = await axios.post(
-        "http://localhost:8001/api/auth/signin",
+        window.location.origin + "/api/auth/signin",
         {
           email,
           password,

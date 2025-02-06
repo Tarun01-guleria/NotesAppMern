@@ -128,7 +128,7 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
       }
 
       const res = await axios.post(
-        "http://localhost:8001/api/note/add",
+        window.location.origin + "/api/note/add",
         formData,
         {
           withCredentials: true,

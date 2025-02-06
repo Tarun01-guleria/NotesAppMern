@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRouter from "./routes/auth.route.js"; // Import your auth routes
+import authRouter from "./routes/auth.route.js";
 import noteRouter from "./routes/note.route.js";
 import path from "path";
 import { fileURLToPath } from "url";

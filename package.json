@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "backend/index.js",
   "scripts": {
-    "start": "nodemon backend/index.js localhost 8080"
+    "start": "node ./Backend/index.js"
   },
   "dependencies": {
     "app-root-path": "3.0.0",

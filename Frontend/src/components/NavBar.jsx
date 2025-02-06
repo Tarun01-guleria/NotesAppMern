@@ -10,6 +10,7 @@ import {
   signoutSuccess,
 } from "../../redux/userSlice";
 import axios from "axios";
+import { Env } from "../env";
 const NavBar = ({ userInfo, handleClearSearch, onSearchNote }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -30,12 +31,12 @@ const NavBar = ({ userInfo, handleClearSearch, onSearchNote }) => {
     try {
       dispatch(signoutStart());
 
-      const res = await axios.get(
-        window.location.origin + "/api/auth/signout",
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.get(Env.API_BASE_URL + "/api/auth/signout", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // Passing the Bearer token
+        },
+      });
 
       if (res.data.success === false) {
         dispatch(signoutFailure(res.data.message));

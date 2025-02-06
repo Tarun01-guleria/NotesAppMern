@@ -10,6 +10,7 @@ import {
 } from "../../../redux/userSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Env } from "../../env";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,10 +37,10 @@ const Login = () => {
     //Login API
 
     try {
-      console.log(window.location.origin);
+      console.log(Env.API_BASE_URL);
       dispatch(signInStart());
       const res = await axios.post(
-        window.location.origin + "/api/auth/signin",
+        Env.API_BASE_URL + "/api/auth/signin",
         {
           email,
           password,
@@ -50,6 +51,7 @@ const Login = () => {
         dispatch(signInFailure(res.data.message));
         toast.error(res.data.message);
       }
+      localStorage.setItem("accessToken", res.data.accessToken);
       toast.success(res.data.message);
       dispatch(signInSuccess(res.data));
       navigate("/");

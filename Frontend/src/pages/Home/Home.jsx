@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
+import { Env } from "../../env";
 
 const Home = () => {
   const { currentUser, loading, errorDispatch } = useSelector(
@@ -38,8 +39,11 @@ const Home = () => {
 
   const getAllNotes = async () => {
     try {
-      const res = await axios.get(window.location.origin + "/api/note/all", {
+      const res = await axios.get(Env.API_BASE_URL + "/api/note/all", {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       });
 
       if (res.data.success === false) {
@@ -65,8 +69,13 @@ const Home = () => {
 
     try {
       const res = await axios.delete(
-        window.location.origin + "/api/note/delete/" + noteId,
-        { withCredentials: true }
+        Env.API_BASE_URL + "/api/note/delete/" + noteId,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
       if (res.data.success === false) {
         toast.error(res.data.message);
@@ -81,9 +90,12 @@ const Home = () => {
 
   const onSearchNote = async (query) => {
     try {
-      const res = await axios.get(window.location.origin + "/api/note/search", {
+      const res = await axios.get(Env.API_BASE_URL + "/api/note/search", {
         params: { query },
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       });
 
       if (res.data.success === false) {
@@ -107,7 +119,12 @@ const Home = () => {
       const res = await axios.put(
         `http://localhost:8001/api/note/update-note-pinned/${noteId}`,
         { isPinned: !noteData.isPinned },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
 
       if (res.data.success === false) {
@@ -129,7 +146,7 @@ const Home = () => {
         handleClearSearch={handleClearSearch}
       />
       <div className="container mx-auto">
-        {allNotes.length > 0 ? (
+        {allNotes?.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mt-8 max-md:m-5">
             {allNotes.map((note) => (
               <NoteCard

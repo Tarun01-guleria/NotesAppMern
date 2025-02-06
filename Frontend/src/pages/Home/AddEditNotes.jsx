@@ -3,6 +3,7 @@ import { MdClose } from "react-icons/md";
 import TagInput from "../../components/Input/TagInput";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Env } from "../../env";
 
 const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
   const [title, setTitle] = useState(noteData?.title || "");
@@ -98,7 +99,10 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
         formData,
         {
           withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
         }
       );
 
@@ -128,11 +132,14 @@ const AddEditNotes = ({ onClose, noteData, type, getAllNotes }) => {
       }
 
       const res = await axios.post(
-        window.location.origin + "/api/note/add",
+        Env.API_BASE_URL + "/api/note/add",
         formData,
         {
           withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
         }
       );
 

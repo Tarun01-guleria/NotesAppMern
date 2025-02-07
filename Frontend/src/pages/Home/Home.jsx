@@ -39,7 +39,7 @@ const Home = () => {
 
   const getAllNotes = async () => {
     try {
-      const res = await axios.get(Env.API_BASE_URL + "/api/note/all", {
+      const res = await axios.get(window.location.origin + "/api/note/all", {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -70,7 +70,7 @@ const Home = () => {
 
     try {
       const res = await axios.delete(
-        Env.API_BASE_URL + "/api/note/delete/" + noteId,
+        window.location.origin + "/api/note/delete/" + noteId,
         {
           withCredentials: true,
           headers: {
@@ -91,7 +91,7 @@ const Home = () => {
 
   const onSearchNote = async (query) => {
     try {
-      const res = await axios.get(Env.API_BASE_URL + "/api/note/search", {
+      const res = await axios.get(window.location.origin + "/api/note/search", {
         params: { query },
         withCredentials: true,
         headers: {

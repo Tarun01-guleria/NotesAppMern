@@ -37,10 +37,10 @@ const Login = () => {
     //Login API
 
     try {
-      console.log(Env.API_BASE_URL);
+      console.log(window.location.origin);
       dispatch(signInStart());
       const res = await axios.post(
-        Env.API_BASE_URL + "/api/auth/signin",
+        window.location.origin + "/api/auth/signin",
         {
           email,
           password,

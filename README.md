@@ -7,6 +7,7 @@ A fullstack web application that allows users to sign up, log in, and manage not
 ✔️ Create, read, update, and delete (CRUD) notes
 ✔️ Speech-to-text transcription for adding notes via voice input 🎙️
 ✔️ Tagging system – Users can add tags like #game, #work, etc., for better organization 🏷️
+✔️ Pin notes – Users can pin important notes, and pinned notes are highlighted for easy visibility 📌
 ✔️ Secure API endpoints
 ✔️ Responsive frontend
 ✔️ MongoDB Atlas for database storage
